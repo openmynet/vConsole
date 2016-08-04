@@ -17,7 +17,8 @@ class VConsole {
 
   constructor() {
     var that = this;
-
+    
+    this.search = ''
     this.version = pkg.version;
     this.html = tpl;
     this.$dom = null;
@@ -42,6 +43,13 @@ class VConsole {
     this.$ = $;
 
     var _onload = function() {
+      if (that.search) {
+        var test = new RegExp(that.search.toString(), 'ig')
+        if (!test.test(window.location.search)) {
+          that.pluginList.default.restore&&that.pluginList.default.restore();
+          return
+        }
+      }
       that._render();
       that._bindEvent();
       that._autoRun();
@@ -306,7 +314,9 @@ class VConsole {
     this.activedTab = tabID;
     this._triggerPluginEvent(this.activedTab, 'show');
   }
-
+  query (v) {
+    this.search = v
+  }
 } // END class
 
 export default VConsole;
