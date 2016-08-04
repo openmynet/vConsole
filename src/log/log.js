@@ -81,7 +81,15 @@ class VConsoleLogTab extends VConsolePlugin {
     });
 
   }
-
+  // restore window.console
+  restore() {
+    let _this = this
+    window.console.log = _this.console.log;
+    window.console.info = _this.console.info;
+    window.console.warn = _this.console.warn;
+    window.console.debug = _this.console.debug;
+    window.console.error = _this.console.error;
+  }
   /**
    * replace window.console with vConsole method
    * @private
